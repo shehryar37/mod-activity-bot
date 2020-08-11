@@ -28,6 +28,7 @@ def main():
         channel.send(message)
 
     discord_client.close()
+    exit(self, 1000)
 
 
 def reddit_access():
@@ -65,4 +66,5 @@ def discord_access():
         exit(self, 2)
 
 
-main()
+if __name__ == "main":
+    main()
