@@ -66,5 +66,4 @@ def discord_access():
         exit(self, 2)
 
 
-if __name__ == "main":
-    main()
+main()
