@@ -13,6 +13,9 @@ def main():
     # Tries getting access to the Discord bot
     discord_client = discord_access()
 
+    # Gets the channel ID
+    channel = discord_client.get_channel(742799267294609448)
+
     # All the mods have been added as friends on the account.
     # So it only has to access r/friends
     subreddit = reddit_client.subreddit('friends')
@@ -21,10 +24,8 @@ def main():
     for comment in subreddit.stream.comments(skip_existing=True):
         message = "{} has just commented in {}: {}".format(
             comment.author.name, comment.subreddit_name_prefixed, comment.link_permalink + comment.id)
-
-    # Gets the channel ID
-    channel = discord_client.get_channel(742799267294609448)
-    channel.send(message)
+        print(message)
+        channel.send(message)
 
 
 def reddit_access():
@@ -56,6 +57,7 @@ def discord_access():
         discord_client.run(os.environ["CLIENT_TOKEN"])
 
         return discord_client
+
     except Exception as e:
         print(e)
         exit(self, 2)
