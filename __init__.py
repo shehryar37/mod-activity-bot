@@ -27,6 +27,8 @@ def main():
         print(message)
         channel.send(message)
 
+    discord_client.close()
+
 
 def reddit_access():
     try:
