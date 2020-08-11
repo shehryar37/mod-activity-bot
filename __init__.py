@@ -24,8 +24,8 @@ def login():
         print("Logged in")
 
         return reddit
-    except:
-        print("Failed to log in")
+    except Exception as e:
+        print(e)
 
 
 main()
