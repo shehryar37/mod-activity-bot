@@ -23,6 +23,7 @@ def main():
 
     discord_client.run(os.environ["CLIENT_TOKEN"])
 
+    discord_client.logout()
     exit(self, 1000)
 
 
