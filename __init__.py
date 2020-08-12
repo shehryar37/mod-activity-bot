@@ -1,10 +1,8 @@
 # Python Libraries
 import os
-import itertools
 
 # PRAW Libraries
 import praw
-from praw.models import Comment, Submission
 
 # Discord API Libraries
 import discord
@@ -17,7 +15,7 @@ def main():
     @discord_client.event
     async def on_ready():
         channel = discord_client.get_channel(742799267294609448)
-        await fetch_comments(channel)
+        await activity(channel)
 
     print("Accessed Discord")
 
@@ -27,7 +25,7 @@ def main():
     exit(self, 1000)
 
 
-async def fetch_comments(channel):
+async def activity(channel):
     # Tries getting access to the Reddit bot
     reddit = reddit_access()
 
@@ -62,6 +60,8 @@ async def fetch_comments(channel):
             print(message)
             await channel.send(message)
             print("Messaged submission on Discord")
+
+    return
 
 
 def reddit_access():
