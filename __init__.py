@@ -3,18 +3,22 @@ import os
 
 import discord
 from discord.ext import commands
-import asyncio
 
 
 def main():
+    discord_client = commands.Bot(command_prefix='.')
+
+    @discord_client.event
+    async def on_ready():
+        channel = discord_client.get_channel(742799267294609448)
+        await fetch_comments(channel)
+
+    discord_client.run(os.environ["CLIENT_TOKEN"])
+
+
+async def fetch_comments(channel):
     # Tries getting access to the Reddit bot
     reddit_client = reddit_access()
-
-    # Tries getting access to the Discord bot
-    discord_client = discord_access()
-
-    # Gets the channel ID
-    channel = discord_client.get_channel(742799267294609448)
 
     # All the mods have been added as friends on the account.
     # So it only has to access r/friends
@@ -25,10 +29,7 @@ def main():
         message = "{} has just commented in {}: {}".format(
             comment.author.name, comment.subreddit_name_prefixed, comment.link_permalink + comment.id)
         print(message)
-        channel.send(message)
-
-    discord_client.close()
-    exit(self, 1000)
+        await channel.send(message)
 
 
 def reddit_access():
@@ -47,23 +48,6 @@ def reddit_access():
     except Exception as e:
         print(e)
         exit(self, 1)
-
-
-def discord_access():
-    discord_client = commands.Bot(command_prefix='.')
-
-    try:
-        @discord_client.event
-        async def on_ready():
-            print("Accessed Discord")
-
-        discord_client.run(os.environ["CLIENT_TOKEN"])
-
-        return discord_client
-
-    except Exception as e:
-        print(e)
-        exit(self, 2)
 
 
 main()
