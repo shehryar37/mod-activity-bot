@@ -16,6 +16,8 @@ def main():
     print("Accessed Discord")
     discord_client.run(os.environ["CLIENT_TOKEN"])
 
+    exit(self, 1000)
+
 
 async def fetch_comments(channel):
     # Tries getting access to the Reddit bot
