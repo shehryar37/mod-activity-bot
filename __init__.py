@@ -13,6 +13,7 @@ def main():
         channel = discord_client.get_channel(742799267294609448)
         await fetch_comments(channel)
 
+    print("Accessed Discord")
     discord_client.run(os.environ["CLIENT_TOKEN"])
 
 
@@ -30,6 +31,7 @@ async def fetch_comments(channel):
             comment.author.name, comment.subreddit_name_prefixed, comment.link_permalink + comment.id)
         print(message)
         await channel.send(message)
+        print("Messaged comment on Discord.")
 
 
 def reddit_access():
