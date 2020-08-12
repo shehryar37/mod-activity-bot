@@ -1,6 +1,12 @@
-import praw
+# Python Libraries
 import os
+import itertools
 
+# PRAW Libraries
+import praw
+from praw.models import Comment, Submission
+
+# Discord API Libraries
 import discord
 from discord.ext import commands
 
@@ -14,6 +20,7 @@ def main():
         await fetch_comments(channel)
 
     print("Accessed Discord")
+
     discord_client.run(os.environ["CLIENT_TOKEN"])
 
     exit(self, 1000)
@@ -21,19 +28,39 @@ def main():
 
 async def fetch_comments(channel):
     # Tries getting access to the Reddit bot
-    reddit_client = reddit_access()
+    reddit = reddit_access()
 
     # All the mods have been added as friends on the account.
     # So it only has to access r/friends
-    subreddit = reddit_client.subreddit('friends')
+    subreddit = reddit.subreddit('friends')
 
-    # Loops over every new comment in r/friends
-    for comment in subreddit.stream.comments(skip_existing=True):
-        message = "{} has just commented in {}: {}".format(
-            comment.author.name, comment.subreddit_name_prefixed, comment.link_permalink + comment.id)
-        print(message)
-        await channel.send(message)
-        print("Messaged comment on Discord.")
+    # pause_after=-1 tells the stream to make one API call and return None if there is no new activity
+    comment_stream = subreddit.stream.comments(
+        skip_existing=True, pause_after=-1)
+    submission_stream = subreddit.stream.submissions(
+        skip_existing=True, pause_after=-1)
+
+    # Loops over every new comment and submission in r/friends
+    while True:
+        for comment in comment_stream:
+            if comment is None:
+                break
+
+            message = "{} has just commented in {}: {}".format(
+                comment.author.name, comment.subreddit_name_prefixed, comment.link_permalink + comment.id)
+            print(message)
+            await channel.send(message)
+            print("Messaged comment on Discord")
+
+        for submission in submission_stream:
+            if submission is None:
+                break
+
+            message = "{} has just submitted in {}: {}".format(
+                submission.author.name, submission.subreddit_name_prefixed, submission.shortlink)
+            print(message)
+            await channel.send(message)
+            print("Messaged submission on Discord")
 
 
 def reddit_access():
