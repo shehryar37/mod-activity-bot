@@ -8,7 +8,7 @@ import praw
 import discord
 from discord.ext import commands
 
-channel_ids = [742799267294609448]  # add 743486931836338267
+channel_ids = [690970700399378473]  # add 743486931836338267
 
 
 def main():
