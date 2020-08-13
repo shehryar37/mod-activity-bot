@@ -54,7 +54,8 @@ async def activity(channels):
 
             for channel in channels:
                 await channel.send(message)
-                print("Messaged comment on Discord")
+
+            print("Messaged comment on Discord")
 
         for submission in submission_stream:
             if submission is None:
@@ -66,7 +67,8 @@ async def activity(channels):
 
             for channel in channels:
                 await channel.send(message)
-                print("Messaged submission on Discord")
+
+            print("Messaged submission on Discord")
 
     return
 
