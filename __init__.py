@@ -8,24 +8,27 @@ import praw
 import discord
 from discord.ext import commands
 
+channel_ids = [742799267294609448]  # add 743486931836338267
+
 
 def main():
     discord_client = commands.Bot(command_prefix='.')
 
     @discord_client.event
     async def on_ready():
-        channel = discord_client.get_channel(742799267294609448)
-        await activity(channel)
+
+        channels = [discord_client.get_channel(
+            channel_id) for channel_id in channel_ids]
+        await activity(channels)
 
     print("Accessed Discord")
-
     discord_client.run(os.environ["CLIENT_TOKEN"])
 
     discord_client.logout()
     exit(self, 1000)
 
 
-async def activity(channel):
+async def activity(channels):
     # Tries getting access to the Reddit bot
     reddit = reddit_access()
 
@@ -48,8 +51,10 @@ async def activity(channel):
             message = "{} has just commented in {}: {}".format(
                 comment.author.name, comment.subreddit_name_prefixed, comment.link_permalink + comment.id)
             print(message)
-            await channel.send(message)
-            print("Messaged comment on Discord")
+
+            for channel in channels:
+                await channel.send(message)
+                print("Messaged comment on Discord")
 
         for submission in submission_stream:
             if submission is None:
@@ -58,8 +63,10 @@ async def activity(channel):
             message = "{} has just submitted in {}: {}".format(
                 submission.author.name, submission.subreddit_name_prefixed, submission.shortlink)
             print(message)
-            await channel.send(message)
-            print("Messaged submission on Discord")
+
+            for channel in channels:
+                await channel.send(message)
+                print("Messaged submission on Discord")
 
     return
 
