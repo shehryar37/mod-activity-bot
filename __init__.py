@@ -8,7 +8,7 @@ import praw
 import discord
 from discord.ext import commands
 
-channel_ids = [690970700399378473]  # add 743486931836338267
+channel_ids = [742799267294609448]  # add 743486931836338267
 
 
 def main():
@@ -25,7 +25,7 @@ def main():
     discord_client.run(os.environ["CLIENT_TOKEN"])
 
     discord_client.logout()
-    exit(self, 1000)
+    exit(1000)
 
 
 async def activity(channels):
@@ -34,7 +34,7 @@ async def activity(channels):
 
     # All the mods have been added as friends on the account.
     # So it only has to access r/friends
-    subreddit = reddit.subreddit('animemes')
+    subreddit = reddit.subreddit('friends')
 
     # pause_after=-1 tells the stream to make one API call and return None if there is no new activity
     comment_stream = subreddit.stream.comments(
@@ -88,7 +88,7 @@ def reddit_access():
 
     except Exception as e:
         print(e)
-        exit(self, 1)
+        exit(1)
 
 
 main()
