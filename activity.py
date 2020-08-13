@@ -1,14 +1,12 @@
 # Python Libraries
 import os
 
-# PRAW Libraries
-import praw
-
 # Discord API Libraries
 import discord
 from discord.ext import commands
 
-channel_ids = [742799267294609448]  # add 743486931836338267
+# Utilities
+import utils
 
 
 def main():
@@ -21,7 +19,7 @@ def main():
             channel_id) for channel_id in channel_ids]
         await activity(channels)
 
-    print("Accessed Discord")
+    print("Accessed Discord from activity.py")
     discord_client.run(os.environ["CLIENT_TOKEN"])
 
     discord_client.logout()
@@ -30,7 +28,7 @@ def main():
 
 async def activity(channels):
     # Tries getting access to the Reddit bot
-    reddit = reddit_access()
+    reddit = utils.reddit_access()
 
     # All the mods have been added as friends on the account.
     # So it only has to access r/friends
@@ -71,24 +69,6 @@ async def activity(channels):
             print("Messaged submission on Discord")
 
     return
-
-
-def reddit_access():
-    try:
-        reddit = praw.Reddit(username=os.environ["USERNAME"],
-                             password=os.environ["PASSWORD"],
-                             client_id=os.environ["CLIENT_ID"],
-                             client_secret=os.environ["CLIENT_SECRET"],
-                             user_agent=os.environ["USER_AGENT"]
-                             )
-
-        print("Accessed Reddit")
-
-        return reddit
-
-    except Exception as e:
-        print(e)
-        exit(1)
 
 
 main()
