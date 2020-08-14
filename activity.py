@@ -16,7 +16,7 @@ def main():
     async def on_ready():
 
         channels = [discord_client.get_channel(
-            channel_id) for channel_id in channel_ids]
+            channel_id) for channel_id in utils.channel_ids]
         await activity(channels)
 
     print("Accessed Discord from activity.py")
@@ -28,7 +28,7 @@ def main():
 
 async def activity(channels):
     # Tries getting access to the Reddit bot
-    reddit = utils.reddit_access()
+    reddit = utils.reddit_access('activity.py')
 
     # All the mods have been added as friends on the account.
     # So it only has to access r/friends
