@@ -9,7 +9,7 @@ from discord.ext import commands
 import utils
 
 
-async def main():
+def main():
     discord_client = commands.Bot(command_prefix='.')
 
     @discord_client.event
@@ -22,7 +22,7 @@ async def main():
     print("Accessed Discord from activity.py")
     discord_client.run(os.environ["CLIENT_TOKEN"])
 
-    await discord_client.logout()
+    discord_client.logout()
     exit(1000)
 
 
