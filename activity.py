@@ -33,7 +33,7 @@ async def activity(channels):
 
     # All the mods have been added as friends on the account.
     # So it only has to access r/friends
-    subreddit = reddit.subreddit('animemes')
+    subreddit = reddit.subreddit('friends')
 
     # pause_after=-1 tells the stream to make one API call and return None if there is no new activity
     comment_stream = subreddit.stream.comments(
