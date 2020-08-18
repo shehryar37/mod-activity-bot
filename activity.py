@@ -1,5 +1,6 @@
 # Python Libraries
 import os
+import datetime
 
 # Discord API Libraries
 import discord
@@ -32,7 +33,7 @@ async def activity(channels):
 
     # All the mods have been added as friends on the account.
     # So it only has to access r/friends
-    subreddit = reddit.subreddit('friends')
+    subreddit = reddit.subreddit('animemes')
 
     # pause_after=-1 tells the stream to make one API call and return None if there is no new activity
     comment_stream = subreddit.stream.comments(
@@ -42,8 +43,10 @@ async def activity(channels):
 
     # Loops over every new comment and submission in r/friends
     while True:
+        t = datetime.datetime.utcnow().timestamp()
         for comment in comment_stream:
-            if comment is None:
+            # Checks if the stream yielded anything or if the comment was posted in the past hour
+            if comment is None or comment.created_utc <= (t - 3600):
                 break
 
             message = "{} has just commented in {}: {}".format(
@@ -56,7 +59,8 @@ async def activity(channels):
             print("Messaged comment on Discord")
 
         for submission in submission_stream:
-            if submission is None:
+            # Checks if the stream yielded anything or if the submission was posted in the past hour
+            if submission is None or submission.created_utc <= (t - 3600):
                 break
 
             message = "{} has just submitted in {}: {}".format(
