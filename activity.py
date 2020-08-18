@@ -23,7 +23,6 @@ def main():
     print("Accessed Discord from activity.py")
     discord_client.run(os.environ["CLIENT_TOKEN"])
 
-    discord_client.logout()
     exit(1000)
 
 
